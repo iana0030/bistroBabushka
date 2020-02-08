@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 10px;
+        }
+
+        article {
+            padding: 10px;
+            background: #e6f1f2;
+        }
+
+        article:nth-child(odd) {
+            background: #e6e8f2;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header></header>
+
+    <section class="data-container"></section>
+    <template>
+        <article id="retter">
+            <img src="" alt="">
+            <h3></h3>
+            <p id=""></p>
+            <p id=""></p>
+            <p id=""></p>
+            <p id=""></p>
+            <p id=""></p>
+        </article>
+
+        <footer></footer>
+    </template>
+
+
+    <script>
+        let alleRetter = [];
+        const endpoint = "https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json";
+
+        document.addEventListener("DOMContentLoaded", start);
+        console.log("load");
+
+        function start() {
+            console.log("start");
+            hentData();
+        }
+
+        async function hentData() {
+            console.log("hentData");
+            const response = await fetch(endpoint);
+            console.log(response);
+            alleRetter = await response.json();
+            console.log(alleRetter);
+            visRet();
+        }
+
+        function visRet() {
+            const container = document.querySelector(".data-container");
+            const madTemplate = document.querySelector("template");
+
+            alleRetter.feed.entry.forEach(ret => {
+                let klon = madTemplate.cloneNode(true).content;
+
+
+                klon.querySelector("h3").textContent = ret.gsx$navn.$t;
+                // klon.querySelector("img").src = ret.gsx$billede.$t;
+                // klon.querySelector("#").textContent = ret.gsx$kort.$t;
+                // klon.querySelector("#").textContent = ret.gsx$pris.$t;
+                // klon.querySelector("#").textContent = ret.gsx$pris.$t;
+                // klon.querySelector("#").textContent = ret.gsx$oprindelse.$t;
+
+                container.appendChild(klon)
+            })
+
+        }
+
+    </script>
+</body>
+
+</html>
