@@ -4,6 +4,7 @@
 /bower_components/
 /node_modules/
 
+*.png
 *.jpg
 *.xml
 *icon_
