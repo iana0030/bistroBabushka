@@ -5,13 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bistro Babushka</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
         }
 
+        body {
+            background-color: rgb(247, 251, 255);
+        }
+
         img {
             width: 100%;
+            height: 250px;
+            object-fit: cover;
         }
 
         section {
@@ -19,19 +27,35 @@
             margin: 0 auto;
             padding: 10px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-gap: 6px;
         }
 
         article {
-            padding: 10px;
-            background: #e6f1f2;
+            background: rgba(255, 178, 87, 0.17);
         }
 
-        article:nth-child(odd) {
-            background: #e6e8f2;
+        h3 {
+            margin: 15px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(224, 85, 33, 0.35);
+            padding-bottom: 3px;
+            color: #450b04;
         }
 
+        p {
+            margin: 15px;
+            font-family: 'Roboto', sans-serif;
+            color: rgba(69, 11, 4, 0.88);
+        }
+
+        #pris {
+            font-size: 1.9rem;
+            font-weight: 900;
+            text-align: end;
+            color: #083b52;
+        }
     </style>
 </head>
 
@@ -44,15 +68,13 @@
         <article id="retter">
             <img src="" alt="">
             <h3></h3>
-            <p id=""></p>
-            <p id=""></p>
-            <p id=""></p>
-            <p id=""></p>
-            <p id=""></p>
+            <p id="kort"></p>
+            <p id="pris"></p>
+            <p id="oprindelse"></p>
         </article>
-
-        <footer></footer>
     </template>
+
+    <footer></footer>
 
 
     <script>
@@ -85,18 +107,15 @@
 
 
                 klon.querySelector("h3").textContent = ret.gsx$navn.$t;
-                // klon.querySelector("img").src = ret.gsx$billede.$t;
-                // klon.querySelector("#").textContent = ret.gsx$kort.$t;
+                klon.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+                klon.querySelector("#kort").textContent = ret.gsx$kort.$t;
+                klon.querySelector("#pris").textContent = ret.gsx$pris.$t + ",-";
                 // klon.querySelector("#").textContent = ret.gsx$pris.$t;
-                // klon.querySelector("#").textContent = ret.gsx$pris.$t;
-                // klon.querySelector("#").textContent = ret.gsx$oprindelse.$t;
+                // klon.querySelector("#oprindelse").textContent = ret.gsx$oprindelse.$t;
 
                 container.appendChild(klon)
             })
 
         }
-
     </script>
-</body>
-
-</html>
+</body></html>
