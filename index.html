@@ -75,12 +75,35 @@
             text-align: end;
             color: #083b52;
         }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            margin: 10px;
+        }
+
+        .valgt {
+            background-color: grey;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
 
     <section id="splash"></section>
+
+    <nav>
+        <button class="filter valgt" data-kat="alle">Alle</button>
+        <button class="filter" data-kat="forretter">Forretter</button>
+        <button class="filter" data-kat="hovedretter">Hovedretter</button>
+        <button class="filter" data-kat="sideorders">Sideorders</button>
+        <button class="filter" data-kat="drikkevarer">Drikkevarer</button>
+        <button class="filter" data-kat="desserter">Desserter</button>
+    </nav>
 
     <section class="data-container"></section>
     <template>
@@ -99,6 +122,7 @@
     <script>
         let alleRetter = [];
         const endpoint = "https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json";
+        let filter = "alle";
 
         document.addEventListener("DOMContentLoaded", start);
         console.log("load");
@@ -106,6 +130,7 @@
         function start() {
             console.log("start");
             hentData();
+            addListenersToButtons();
         }
 
         async function hentData() {
@@ -120,21 +145,40 @@
         function visRet() {
             const container = document.querySelector(".data-container");
             const madTemplate = document.querySelector("template");
+            container.innerHTML = "";
 
             alleRetter.feed.entry.forEach(ret => {
-                let klon = madTemplate.cloneNode(true).content;
+                if (filter == "alle" || filter == ret.gsx$kategori.$t) {
+                    let klon = madTemplate.cloneNode(true).content;
 
 
-                klon.querySelector("h3").textContent = ret.gsx$navn.$t;
-                klon.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
-                klon.querySelector("#kort").textContent = ret.gsx$kort.$t;
-                klon.querySelector("#pris").textContent = ret.gsx$pris.$t + ",-";
-                // klon.querySelector("#").textContent = ret.gsx$pris.$t;
-                // klon.querySelector("#oprindelse").textContent = ret.gsx$oprindelse.$t;
+                    klon.querySelector("h3").textContent = ret.gsx$navn.$t;
+                    klon.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+                    klon.querySelector("#kort").textContent = ret.gsx$kort.$t;
+                    klon.querySelector("#pris").textContent = ret.gsx$pris.$t + ",-";
+                    // klon.querySelector("#").textContent = ret.gsx$pris.$t;
+                    // klon.querySelector("#oprindelse").textContent = ret.gsx$oprindelse.$t;
 
-                container.appendChild(klon)
+                    container.appendChild(klon)
+                }
+
             })
 
+        }
+
+        function addListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            console.log("filter");
+            filter = this.dataset.kat;
+            visRet();
+            document.querySelector(".valgt").classList.remove("valgt");
+            this.classList.add("valgt");
+            // document.querySelector("h1").textContent = this.textContent;
         }
     </script>
 </body></html>
