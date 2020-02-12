@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(247, 251, 255);
+            margin: 0;
+        }
+
+        img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        #splash {
+            background-image: url(splash1.png);
+            background-size: cover;
+            width: 100%;
+            height: 400px;
+            background-position: 50% 50%;
+        }
+
+        .data-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-gap: 6px;
+        }
+
+        .retter {
+            background: rgba(255, 178, 87, 0.17);
+            cursor: pointer;
+        }
+
+        h1 {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 2rem;
+            color: #450b04;
+            text-align: center;
+            background-color: rgba(255, 221, 192, 0.65);
+            padding: 15px 10px 13px 10px;
+            border-bottom: 1px solid rgba(224, 85, 33, 0.35);
+        }
+
+        h3 {
+            margin: 15px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(224, 85, 33, 0.35);
+            padding-bottom: 3px;
+            color: #450b04;
+        }
+
+        p {
+            margin: 15px;
+            font-family: 'Roboto', sans-serif;
+            color: rgba(69, 11, 4, 0.88);
+        }
+
+        .pris {
+            font-size: 1.9rem;
+            font-weight: 900;
+            text-align: end;
+            color: #083b52;
+            margin-top: 25px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            margin: 10px;
+            width: 100px;
+            height: 30px;
+            border: 1px solid rgba(224, 85, 33, 0.35);
+            background-color: #fde7dc;
+            color: #450b04;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        button:hover {
+            box-shadow: 4px 3px 2.5px rgba(255, 159, 76, 0.27);
+        }
+
+        .valgt {
+            background-color: #c6e1f2;
+            color: #b56910;
+        }
+
+        footer {
+            background-color: #887B8D;
+            width: 100%;
+            bottom: 0;
+            color: #c6e1f2;
+        }
+
+        footer div {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        li {
+            list-style-type: none;
+            line-height: 1.4rem
+        }
+
+
+
+        #popup {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.34);
+            z-index: 101;
+            overflow: scroll;
+        }
+
+        .ret_popup {
+            max-width: 1100px;
+            margin: 60px 10px;
+            padding: 1.5rem;
+            background-color: rgb(213, 226, 218);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #popup img {
+            width: 90%;
+            height: 500px;
+            object-fit: cover;
+
+            object-position: 50% 35%;
+            align-self: center;
+            margin-bottom: 20px;
+        }
+
+        #popup div {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            justify-content: space-around;
+            margin: 1vw 5vw;
+            border-bottom: 1px solid rgba(224, 85, 33, 0.35);
+        }
+
+        #popup .pris,
+        #popup .lang {
+            flex-grow: 1;
+            flex-basis: 300px;
+        }
+
+        #popup .pris {
+            font-size: 4rem;
+            margin-top: 0;
+        }
+
+        #luk {
+            font-size: 1.5rem;
+            margin: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(224, 85, 33, 0.35);
+            background-color: #fde7dc;
+            color: #450b04;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .hide {
+            display: none;
+            pointer-events: none;
+        }
+
+
+
+
+
+
+
+        @media only screen and (min-width: 700px) {
+            #splash {
+                height: 800px;
+            }
+
+            .ret_popup {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="splash"></section>
+
+    <nav>
+        <button class="filter valgt" data-kat="alle">Alle</button>
+        <button class="filter" data-kat="forretter">Forretter</button>
+        <button class="filter" data-kat="hovedretter">Hovedretter</button>
+        <button class="filter" data-kat="desserter">Desserter</button>
+        <button class="filter" data-kat="sideorders">Sideorders</button>
+        <button class="filter" data-kat="drikkevarer">Drikkevarer</button>
+
+    </nav>
+
+    <section class="data-container"></section>
+    <template>
+        <article class="retter">
+            <img src="" alt="">
+            <h3></h3>
+            <p class="kort"></p>
+            <p class="pris"></p>
+            <p class="oprindelse"></p>
+        </article>
+    </template>
+
+    <section id="popup" class="hide">
+        <article class="ret_popup">
+            <button id="luk">X</button>
+            <h1></h1>
+            <img src="" alt="">
+            <div>
+                <p class="lang"></p>
+                <p class="pris"></p>
+            </div>
+        </article>
+    </section>
+
+    <footer>
+        <div>
+            <ul>
+                <li><b>Addresse:</b></li>
+                <li>Grønnegade 97</li>
+                <li>1234 København K</li>
+            </ul>
+            <ul>
+                <li><b>Åbningstider:</b></li>
+                <li>Mandag - fredag 10:30-22:00</li>
+                <li>Lørdag 12:00-23:00</li>
+            </ul>
+        </div>
+
+
+    </footer>
+
+
+    <script>
+        let alleRetter = [];
+        const endpoint = "https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json";
+        let filter = "alle";
+        const popup = document.querySelector("#popup");
+
+        document.addEventListener("DOMContentLoaded", start);
+        console.log("load");
+
+        function start() {
+            console.log("start");
+            hentData();
+            addListenersToButtons();
+        }
+
+        async function hentData() {
+            console.log("hentData");
+            const response = await fetch(endpoint);
+            console.log(response);
+            alleRetter = await response.json();
+            console.log(alleRetter);
+            visRet();
+        }
+
+        function visRet() {
+            const container = document.querySelector(".data-container");
+            const madTemplate = document.querySelector("template");
+            container.innerHTML = "";
+
+            alleRetter.feed.entry.forEach(ret => {
+                if (filter == "alle" || filter == ret.gsx$kategori.$t) {
+                    let klon = madTemplate.cloneNode(true).content;
+
+
+                    klon.querySelector("h3").textContent = ret.gsx$navn.$t;
+                    klon.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+                    klon.querySelector("img").alt = "billede af " + ret.gsx$navn.$t;
+                    klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
+                    klon.querySelector(".pris").textContent = ret.gsx$pris.$t + ",-";
+
+                    klon.querySelector(".retter").addEventListener("click", () => {
+                        visPopup(ret)
+                    });
+
+                    container.appendChild(klon)
+                }
+
+            })
+
+        }
+
+
+
+
+        function visPopup(ret) {
+            console.log(ret);
+            popup.classList.remove("hide");
+            popup.querySelector("button").addEventListener("click", () => popup.classList.add("hide"));
+
+            popup.querySelector("h1").textContent = ret.gsx$navn.$t + " fra " + ret.gsx$oprindelse.$t;
+            popup.querySelector("img").src = "imgs/large/" + ret.gsx$billede.$t + ".jpg";
+            popup.querySelector("img").alt = "billede af " + ret.gsx$navn.$t;
+            popup.querySelector(".lang").textContent = ret.gsx$lang.$t;
+            popup.querySelector(".pris").textContent = ret.gsx$pris.$t + ",-";
+
+        }
+
+
+
+
+
+
+        function addListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            console.log("filter");
+            filter = this.dataset.kat;
+            visRet();
+            document.querySelector(".valgt").classList.remove("valgt");
+            this.classList.add("valgt");
+            // document.querySelector("h1").textContent = this.textContent;
+        }
+    </script>
+</body></html>
